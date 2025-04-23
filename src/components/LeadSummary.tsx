@@ -1,11 +1,11 @@
 
-import { Users, CheckCircle, Activity, TrendingUp, List } from "lucide-react";
+import { Users, CheckCircle, Activity, TrendingUp } from "lucide-react";
 
 export default function LeadSummary() {
   return (
     <section className="w-full mt-10 mb-6">
-      {/* Make grid responsive and with 5 columns if possible */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-5">
+      {/* Make grid responsive and with 4 columns */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
         {/* Total Leads */}
         <div className="bg-[#15213f] rounded-2xl p-6 flex items-center space-x-4 shadow text-white">
           <div className="bg-[#20336e] rounded-lg p-2">
@@ -60,21 +60,7 @@ export default function LeadSummary() {
             </div>
           </div>
         </div>
-
-        {/* 5th Card: Lead Conversion Rate */}
-        <div className="bg-[#E5DEFF] rounded-2xl p-6 flex items-center space-x-4 shadow text-[#1A1F2C]">
-          <div className="bg-[#9b87f5] rounded-lg p-2">
-            <List className="w-7 h-7" />
-          </div>
-          <div>
-            <div className="text-lg font-bold">26.5%</div>
-            <div className="text-xs opacity-80 mt-1">Lead Conversion Rate</div>
-            <div className="text-xs opacity-70">Based on last 30 days</div>
-          </div>
-        </div>
-        
       </div>
     </section>
   );
 }
-
