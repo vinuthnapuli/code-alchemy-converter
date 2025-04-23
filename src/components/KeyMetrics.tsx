@@ -1,7 +1,7 @@
 
 import { BarChart3, Target, ChartBar, ChartPie } from "lucide-react";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell, Legend, Tooltip } from "recharts";
 import React from "react";
 
 const leadGenerationData = [
@@ -34,21 +34,37 @@ export default function KeyMetrics() {
               <Target className="w-5 h-5" />
             </button>
           </div>
-          <div className="border rounded-lg border-dashed border-gray-200 bg-gray-50 h-[170px] mt-2 flex items-center justify-center text-gray-400 text-sm">
-            <ChartContainer
-              config={{
-                leads: { label: "Leads", icon: ChartBar, color: "#9b87f5" },
-              }}
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={leadGenerationData}>
-                  <XAxis dataKey="name" tick={{ fontSize: 12 }} axisLine={false} />
-                  <YAxis tick={{ fontSize: 12 }} axisLine={false} width={30} />
-                  <Bar dataKey="leads" fill="#9b87f5" radius={[6, 6, 0, 0]} />
-                  <ChartTooltipContent nameKey="name" />
-                </BarChart>
-              </ResponsiveContainer>
-            </ChartContainer>
+          <div className="border rounded-lg border-gray-200 bg-gray-50 h-[220px] mt-2 p-4">
+            <ResponsiveContainer width="100%" height="100%" className="mt-2">
+              <BarChart data={leadGenerationData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
+                <XAxis 
+                  dataKey="name" 
+                  tick={{ fontSize: 10 }} 
+                  axisLine={false}
+                  tickLine={false}
+                  angle={-45}
+                  textAnchor="end"
+                  height={50}
+                />
+                <YAxis 
+                  tick={{ fontSize: 10 }} 
+                  axisLine={false} 
+                  tickLine={false}
+                  width={30}
+                />
+                <Tooltip 
+                  content={
+                    <ChartTooltipContent nameKey="name" />
+                  }
+                />
+                <Bar 
+                  dataKey="leads" 
+                  fill="#9b87f5" 
+                  radius={[4, 4, 0, 0]} 
+                  barSize={30}
+                />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
         <div className="flex-1 min-w-[320px] max-w-lg bg-white border rounded-2xl shadow-sm p-6">
@@ -61,46 +77,38 @@ export default function KeyMetrics() {
               <BarChart3 className="w-5 h-5" />
             </button>
           </div>
-          <div className="border rounded-lg border-dashed border-gray-200 bg-gray-50 h-[170px] mt-2 flex items-center justify-center text-gray-400 text-sm">
-            <ChartContainer
-              config={{
-                "Product Features": {
-                  label: "Product Features",
-                  icon: ChartPie,
-                  color: pieColors[0],
-                },
-                "Cloud Migration": {
-                  label: "Cloud Migration",
-                  icon: ChartPie,
-                  color: pieColors[1],
-                },
-                "AI Implementation": {
-                  label: "AI Implementation",
-                  icon: ChartPie,
-                  color: pieColors[2],
-                },
-              }}
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={topicInterestData}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={48}
-                    innerRadius={24}
-                    stroke="none"
-                  >
-                    {topicInterestData.map((entry, idx) => (
-                      <Cell key={`cell-${idx}`} fill={pieColors[idx % pieColors.length]} />
-                    ))}
-                  </Pie>
-                  <ChartTooltipContent nameKey="name" />
-                </PieChart>
-              </ResponsiveContainer>
-            </ChartContainer>
+          <div className="border rounded-lg border-gray-200 bg-gray-50 h-[220px] mt-2 p-4 flex flex-col">
+            <ResponsiveContainer width="100%" height="100%" className="mt-2">
+              <PieChart>
+                <Pie
+                  data={topicInterestData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={60}
+                  innerRadius={30}
+                  stroke="none"
+                  label={({name, percent}) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                  labelLine={false}
+                >
+                  {topicInterestData.map((entry, idx) => (
+                    <Cell key={`cell-${idx}`} fill={pieColors[idx % pieColors.length]} />
+                  ))}
+                </Pie>
+                <Tooltip 
+                  content={
+                    <ChartTooltipContent nameKey="name" />
+                  }
+                />
+                <Legend 
+                  layout="horizontal" 
+                  verticalAlign="bottom" 
+                  align="center" 
+                  wrapperStyle={{fontSize: "10px", marginTop: "10px"}}
+                />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
         </div>
         <div className="flex-grow"/>
