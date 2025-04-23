@@ -1,6 +1,6 @@
 
 import { BarChart3, Target, ChartBar, ChartPie } from "lucide-react";
-import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
+//import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell, Legend, Tooltip } from "recharts";
 import React from "react";
 
@@ -52,11 +52,11 @@ export default function KeyMetrics() {
                   tickLine={false}
                   width={30}
                 />
-                <Tooltip 
+{/*                 <Tooltip 
                   content={
                     <ChartTooltipContent nameKey="name" />
                   }
-                />
+                /> */}
                 <Bar 
                   dataKey="leads" 
                   fill="#9b87f5" 
@@ -96,11 +96,11 @@ export default function KeyMetrics() {
                     <Cell key={`cell-${idx}`} fill={pieColors[idx % pieColors.length]} />
                   ))}
                 </Pie>
-                <Tooltip 
+{/*                 <Tooltip 
                   content={
                     <ChartTooltipContent nameKey="name" />
                   }
-                />
+                /> */}
                 <Legend 
                   layout="horizontal" 
                   verticalAlign="bottom" 
