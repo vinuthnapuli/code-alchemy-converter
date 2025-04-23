@@ -1,5 +1,23 @@
 
-import { BarChart3, Target } from "lucide-react";
+import { BarChart3, Target, ChartBar, ChartPie } from "lucide-react";
+import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import React from "react";
+
+const leadGenerationData = [
+  { name: "Email Blast", leads: 205 },
+  { name: "Webinar", leads: 320 },
+  { name: "LinkedIn Outreach", leads: 160 },
+  { name: "Referral", leads: 110 },
+];
+
+const topicInterestData = [
+  { name: "Product Features", value: 380 },
+  { name: "Cloud Migration", value: 160 },
+  { name: "AI Implementation", value: 220 },
+];
+
+const pieColors = ["#9b87f5", "#f59e33", "#22724A"];
 
 export default function KeyMetrics() {
   return (
@@ -16,8 +34,21 @@ export default function KeyMetrics() {
               <Target className="w-5 h-5" />
             </button>
           </div>
-          <div className="border rounded-lg border-dashed border-gray-200 bg-gray-50 h-[110px] mt-2 flex items-center justify-center text-gray-400 text-sm">
-            Graph visualization would appear here
+          <div className="border rounded-lg border-dashed border-gray-200 bg-gray-50 h-[170px] mt-2 flex items-center justify-center text-gray-400 text-sm">
+            <ChartContainer
+              config={{
+                leads: { label: "Leads", icon: ChartBar, color: "#9b87f5" },
+              }}
+            >
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={leadGenerationData}>
+                  <XAxis dataKey="name" tick={{ fontSize: 12 }} axisLine={false} />
+                  <YAxis tick={{ fontSize: 12 }} axisLine={false} width={30} />
+                  <Bar dataKey="leads" fill="#9b87f5" radius={[6, 6, 0, 0]} />
+                  <ChartTooltipContent nameKey="name" />
+                </BarChart>
+              </ResponsiveContainer>
+            </ChartContainer>
           </div>
         </div>
         <div className="flex-1 min-w-[320px] max-w-lg bg-white border rounded-2xl shadow-sm p-6">
@@ -30,8 +61,46 @@ export default function KeyMetrics() {
               <BarChart3 className="w-5 h-5" />
             </button>
           </div>
-          <div className="border rounded-lg border-dashed border-gray-200 bg-gray-50 h-[110px] mt-2 flex items-center justify-center text-gray-400 text-sm">
-            Graph visualization would appear here
+          <div className="border rounded-lg border-dashed border-gray-200 bg-gray-50 h-[170px] mt-2 flex items-center justify-center text-gray-400 text-sm">
+            <ChartContainer
+              config={{
+                "Product Features": {
+                  label: "Product Features",
+                  icon: ChartPie,
+                  color: pieColors[0],
+                },
+                "Cloud Migration": {
+                  label: "Cloud Migration",
+                  icon: ChartPie,
+                  color: pieColors[1],
+                },
+                "AI Implementation": {
+                  label: "AI Implementation",
+                  icon: ChartPie,
+                  color: pieColors[2],
+                },
+              }}
+            >
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={topicInterestData}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={48}
+                    innerRadius={24}
+                    stroke="none"
+                  >
+                    {topicInterestData.map((entry, idx) => (
+                      <Cell key={`cell-${idx}`} fill={pieColors[idx % pieColors.length]} />
+                    ))}
+                  </Pie>
+                  <ChartTooltipContent nameKey="name" />
+                </PieChart>
+              </ResponsiveContainer>
+            </ChartContainer>
           </div>
         </div>
         <div className="flex-grow"/>
